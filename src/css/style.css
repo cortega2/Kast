@@ -1,0 +1,26 @@
+.navbar-default{
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+}
+
+#search{
+	width: 100%;
+	margin-top: 10px;
+	position: relative;
+}
+
+#inputBox{
+	width: 50%;
+	margin-right: 5px;
+}
+
+#searchButton{
+	float: left;
+}
+
+#mapLocation{
+	/*thanks stackoverflow*/
+	height: -moz-calc(100% - 50px);
+    height: -webkit-calc(100% - 50px);
+    height: calc(100% - 50px);
+}
