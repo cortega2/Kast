@@ -18,9 +18,20 @@
 	float: left;
 }
 
-#mapLocation{
+#mapLocation, #information{
 	/*thanks stackoverflow*/
 	height: -moz-calc(100% - 50px);
     height: -webkit-calc(100% - 50px);
     height: calc(100% - 50px);
+}
+
+/*weather info*/
+#current{
+	padding: 10px;
+	border-bottom: 1px solid black;
+}
+
+.tab-content{
+	height: inherit;
+	overflow: auto;
 }

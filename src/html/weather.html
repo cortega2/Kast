@@ -1,0 +1,35 @@
+<!-- <div id="information"> -->
+	 <!-- <div id="current">
+			<h1>Now: {{info.current.apparentTemperature}} °F</h1>
+			<h2>{{info.current.summary}}</h2>
+
+			<h1>Now: {{info.current.apparentTemperature}} °F</h1>
+			<h2>{{info.current.summary}}</h2>
+
+			<h1>Now: {{info.current.apparentTemperature}} °F</h1>
+			<h2>{{info.current.summary}}</h2>
+
+			<h1>Now: {{info.current.apparentTemperature}} °F</h1>
+			<h2>{{info.current.summary}}</h2>
+
+			<h1>Now: {{info.current.apparentTemperature}} °F</h1>
+			<h2>{{info.current.summary}}</h2>
+		</div>
+		<div id="48hrs">
+	</div>    	 -->
+
+	<tabset justified="true" id="information">
+		<tab heading="Current">
+			<div id="current">
+				<i ng-class="info.current.icon" ></i>
+				<h1>Now: {{info.current.apparentTemperature}} °F</h1>
+				<h3>{{info.current.summary}} with a cloudcover of {{(info.current.cloudCover * 100) | number : 0}}%</h3>
+				<h3>Humidity is at {{info.current.humidity * 100 | number : 0}}%</h3>
+			</div>
+			<div id="48hrs">
+			</div>    	
+	    </tab>
+	    <tab heading="Week">Short Labeled Justified content</tab>
+	    <tab heading="Past">Long Labeled Justified content</tab>
+	 </tabset>
+<!-- </div> -->

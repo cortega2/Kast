@@ -44,7 +44,11 @@
 		});
 	});
 
-	app.controller('WeatherInfoCTRL', function ($scope, $http){
+	app.controller('WeatherInfoCTRL', function ($scope){
+		$scope.info = {};
+		$scope.info.current = {};
+		$scope.info.current.icon = "fa fa-camera-retro fa-5x";
+
 		var weatherInfo = new WeatherInfo(key);
 
 		$scope.$on('FoundLocation', function(event, data){
@@ -52,23 +56,63 @@
 			// getInfo(data.lat, data.lng);
 		});
 
-		function updateInfo (info){
-			console.log(info);
+		function updateInfo (data){
+			$scope.info.current = data.currently;
+			$scope.info.current.icon = getIcon(data.currently.icon);
+			// $scope.info.current.icon = "fa fa-ge fa-5x";
+			$scope.$apply();
 		};
 
-		function getInfo(lat, lng){
-			// var link = 'https://api.forecast.io/forecast/' + key +'/'+ lat +',' + lng + '&callback=JSON_CALLBACk';
+		function getIcon(desc){
+			var icon = "";
+			switch(desc){
+				case "clear-day":
+					icon = "fa-sun-o";
+					break;
+				case "clear-night":
+					icon = "fa-moon-o";
+					break;
+				case "rain":
+					icon = "fa-tint"
+					break;
+				case "snow":
+					icon = "fa-ge"
+					break;
+				case "sleet":
+					icon = "fa-link"
+					break;
+				case "wind":
+					icon = "fa-long-arrow-right"
+					break;
+				case "fog":
+					icon = "fa-navicon";
+					break;
+				
+				default:
+					icon = "fa-cloud";
+					break;
+			};
 
-			// $http.jsonp(link).
-			//     success(function(data) {
-			//     	console.log(data);
-			//     }).
-			//     error(function(data, status) {
-			//         $scope.error = true
-			//         console.log(status);
-			//     });
-		}
+			return "fa " + icon + " fa-5x";
+		};
 
 	});
+
+	app.directive('weather', function (){
+		return {
+			restrict : 'E',
+			templateUrl : './src/html/weather.html'
+		};
+	});
+
+	 app.directive('weatherIcon', [function () {
+        return {
+            restrict: 'E',
+            link: function (scope, element, attrs) {
+            	var icon = angular.element("<i class="+ attrs.icon + "></i>");
+                element.append(icon);
+            }
+        }
+    }]);
 
 })();

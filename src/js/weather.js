@@ -13,8 +13,10 @@ function WeatherInfo(key){
 	    	if(error){
 	    		console.log(error);
 	    	}
-
-	    	console.log(data);
+	    	else{
+	    		console.log(data);
+	    		callback(data);
+	    	}
 	    });
 	}
 }
