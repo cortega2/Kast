@@ -15,25 +15,27 @@ function LeafletMap(div){
   //         osmAttribution = 'Map data © OpenStreetMap contributors, CC-BY-SA',
   //         osmLayer = new L.TileLayer(osmUrl, {attribution: osmAttribution});
 
-        var radar = L.tileLayer('http://{s}.tile.openweathermap.org/map/precipitation/{z}/{x}/{y}.png', {attribution: 'Map data © OpenWeatherMap'});
+        // var radar = L.tileLayer('http://{s}.tile.openweathermap.org/map/precipitation/{z}/{x}/{y}.png', {attribution: 'Map data © OpenWeatherMap'});
 
 		// map.addLayer(baseLayer);
 
 		map = L.map(div, {
 		    center: [51.505, -0.09],
 		    zoom: 10,
-		    layers: [radar, baseLayer]
+		    layers: [ baseLayer]
 		});
 
 		var tiles = {
 			"Normal" : baseLayer
 		};
 
-		var overLays = {
-			"Precipitation" : radar
-		};
+		// var overLays = {
+		// 	"Precipitation" : radar
+		// };
 
-		L.control.layers(tiles, overLays).addTo(map);
+		L.control.layers(tiles).addTo(map);
+
+		foo = map;
 
 	};
 

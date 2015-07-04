@@ -1,35 +1,19 @@
-<!-- <div id="information"> -->
-	 <!-- <div id="current">
+<tabset justified="true" id="information">
+	<tab heading="Current">
+		<div id="current">
+			<i ng-class="info.current.icon" ></i>
 			<h1>Now: {{info.current.apparentTemperature}} °F</h1>
-			<h2>{{info.current.summary}}</h2>
-
-			<h1>Now: {{info.current.apparentTemperature}} °F</h1>
-			<h2>{{info.current.summary}}</h2>
-
-			<h1>Now: {{info.current.apparentTemperature}} °F</h1>
-			<h2>{{info.current.summary}}</h2>
-
-			<h1>Now: {{info.current.apparentTemperature}} °F</h1>
-			<h2>{{info.current.summary}}</h2>
-
-			<h1>Now: {{info.current.apparentTemperature}} °F</h1>
-			<h2>{{info.current.summary}}</h2>
-		</div>
-		<div id="48hrs">
-	</div>    	 -->
-
-	<tabset justified="true" id="information">
-		<tab heading="Current">
-			<div id="current">
-				<i ng-class="info.current.icon" ></i>
-				<h1>Now: {{info.current.apparentTemperature}} °F</h1>
-				<h3>{{info.current.summary}} with a cloudcover of {{(info.current.cloudCover * 100) | number : 0}}%</h3>
-				<h3>Humidity is at {{info.current.humidity * 100 | number : 0}}%</h3>
+			<h4>{{info.current.summary}} with a cloud cover of {{(info.current.cloudCover * 100) | number : 0}}%</h4>
+			<h4>Humidity is at {{info.current.humidity * 100 | number : 0}}%</h4>
+			<div class="graphSpace">
+				<donut-chart data="[info.current.cloudCover, 1 - info.current.cloudCover]" ng-style="{ height: 100 + '%', width: 100/2  + '%' }"></donut-chart>
+				<donut-chart data="[info.current.humidity, 1 - info.current.humidity]" ng-style="{ height: 100 + '%', width: 100/2  + '%' }"></donut-chart>
 			</div>
-			<div id="48hrs">
-			</div>    	
-	    </tab>
-	    <tab heading="Week">Short Labeled Justified content</tab>
-	    <tab heading="Past">Long Labeled Justified content</tab>
-	 </tabset>
-<!-- </div> -->
+		</div>
+		<!-- <div id="48hrs"> -->
+
+		<!-- </div>    	 -->
+    </tab>
+    <tab heading="Week">Short Labeled Justified content</tab>
+    <tab heading="Past">Long Labeled Justified content</tab>
+ </tabset>
