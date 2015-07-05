@@ -1,20 +1,31 @@
 <tabset justified="true" id="information">
-	<tab heading="Current">
+	<tab heading="Current" ng-click="testClick('current')">
 		<div id="current">
-			<i ng-class="info.current.icon" ></i>
-			<h1>Now: {{info.current.apparentTemperature}} °F</h1>
-			<p>{{info.current.summary}}</p>
+			<h1>Now</h1>
+			<span><i ng-class="info.current.icon" ></i></span>
+			<h1> {{info.current.apparentTemperature}} °F</h1>
+			<h3>{{info.current.summary}}</h3>
 			<div class="graphSpace">
 				<donut-chart data="[info.current.cloudCover, 1 - info.current.cloudCover]" ng-style="{ height: 100 + '%', width: 100/2  + '%' }" icon="'cloud'"></donut-chart>
 				<donut-chart data="[info.current.humidity, 1 - info.current.humidity]" ng-style="{ height: 100 + '%', width: 100/2  + '%' }" icon="'drop'"></donut-chart>
 			</div>
 		</div>
-		<!-- <div id="48hrs"> -->
-		<plot-graph data="info.hourly.data" labels="['Temperature', 'Hours After Now']" value="'apparentTemperature'" title="'Hourly Temperature'"></plot-graph>
+		<div id="48hrs">
+			<h2>The next 48hrs</h2>
+			<plot-graph data="info.hourly.data" labels="['Temperature', 'Hours After Now']" value="'temperature'" title="'Temp In The Next hrs'" colors="['#fc9272', '#de2d26']" ></plot-graph>
+			
+<!-- 			<plot-graph data="info.hourly.data" labels="['Humidity (%)', 'Hours After Now']" value="'humidity'" title="'Humidity In The Next hrs'" colors="['#9ecae1', '#3182bd']" percentage="true" tab="'current'"></plot-graph>
 
-		<!-- </div>    	 -->
+			<plot-graph data="info.hourly.data" labels="['Coverage (%)', 'Hours After Now']" value="'cloudCover'" title="'Cloud Cover In The Next hrs'" colors="['#bdbdbd', '#636363']" percentage="true" tab="'current'"></plot-graph> -->
+
+		</div>    	
     </tab>
-    <tab heading="Week">Short Labeled Justified content</tab>
+    <tab heading="Week">
+    	<div>
+    		<!-- <plot-graph data="info.hourly.data" labels="['Temperature', 'Hours After Now']" value="'temperature'" title="'Temp In The Next hrs'" colors="['#fc9272', '#de2d26']" tab="'week'"></plot-graph> -->
+    	</div>
+    </tab>
+
     <tab heading="Past">Long Labeled Justified content</tab>
  </tabset>
 

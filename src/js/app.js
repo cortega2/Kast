@@ -10,12 +10,6 @@
             
             geocoder.geocode( { 'address': input.value}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
-                    // console.log(results);
-                  // map.setCenter(results[0].geometry.location);
-                  // var marker = new google.maps.Marker({
-                  //     map: map,
-                  //     position: results[0].geometry.location
-                  // });
                     input.value = results[0].formatted_address;
 
                     $rootScope.$broadcast('FoundLocation', {
@@ -59,6 +53,10 @@
             // $scope.info.current.icon = "fa fa-ge fa-5x";
             $scope.$apply();
         };
+
+        $scope.testClick = function(){
+            console.log("clicked");
+        }
 
         function getIcon(desc){
             var icon = "";
@@ -257,11 +255,12 @@
             var labels = scope.labels;
             var value = scope.value;
             var title = scope.title;
+            var percentage = scope.percentage;
 
-            var dx = 50;
-            var dy = 50;
+            var dx = 80;
+            var dy = 80;
 
-            var color = "blue";
+            var colors = scope.colors;
 
             var drawSection = d3.select(el).append('svg')
                 .attr("width", width)
@@ -270,38 +269,11 @@
 
             var graph = drawSection.append("g");
 
-            // if(makeTitle){
-            //     drawSection.append("g")
-            //         .attr("transform", "translate(" +  dx +"," + (dy - 10) + ")")
-            //         .append("text")
-            //         .text(function(){
-            //             return title.toUpperCase();
-            //         })
-            //         .style("font-size", "16px")
-            //         .style("font-family", "sans-serif");
-            // };
-
-            // make bars
-            
-
-            // graph.append("text")
-            //     .attr("transform", "translate("+ width/2 + "," + (height + (dy - 10))+ ")")
-            //     .text(function(){
-            //         return label;
-            //     })
-            //     .attr("fill", "black")
-            //     .style("font-size", "12px")
-            //     .style("font-family", "sans-serif");
-
             scope.$watch(function() {
                 return el.clientWidth * el.clientHeight
             }, function(){
                 width = el.clientWidth
                 height = el.clientHeight
-
-                // min = Math.min(width, height)
-                // arc.outerRadius(min / 2 * 0.7).innerRadius(min / 2 * 0.6)
-                // arcs.attr('d', arc)
 
                 drawSection.attr({width: width, height: height});
                 graph.attr('transform', 'translate(' + width/2 + ',' + height/2+ ')')
@@ -312,10 +284,17 @@
                 if(dataPoints == undefined)
                     return;
 
+                // couldn't get update to work properly, this will have to do for the prototype
+                graph.selectAll('*').remove();
+
                 var max = 0;
                 var min = 1000;
 
                 for (var i = 0; i < dataPoints.length; i++) {
+                    if (percentage) {
+                        dataPoints[i][value] = Math.round(dataPoints[i][value] * 100);
+                    };
+
                     if(dataPoints[i][value] > max){
                         max = dataPoints[i][value];
                     };
@@ -327,13 +306,22 @@
 
                 var colorScale = d3.scale.linear()
                     .domain([min, max])
-                    .range(["#fee0d2", "#de2d26"]);
+                    .range([colors[0], colors[1]]);
 
-                max = Math.round(max/10) * 10;
-                min = Math.round(min/10) * 10;
+                max = Math.ceil(max/10) * 10;
+                min = Math.floor(min/10) * 10;
 
+                // create ticks for the scale
                 var yTicks = (max - min) / 10;
-                var xTicks = (dataPoints.length > 24) ? dataPoints.length/2 : dataPoints.length;
+                var xTicks;
+
+                var l = dataPoints.length;
+
+                if((l*24) > (width - dx)){
+                    xTicks =   l - Math.floor( ((l*24) - (width - dx)) / 24 );
+                }
+                else
+                    xTicks = l;
 
                 // make axis
                 var xScale = d3.scale.linear()
@@ -347,6 +335,25 @@
                 var yaxis = d3.svg.axis().scale(yScale).ticks(yTicks).orient("left");
                 var xaxis = d3.svg.axis().scale(xScale).ticks(xTicks).orient("bottom");
 
+                // draw points
+                graph.selectAll("circle")
+                .data(dataPoints)
+                .enter()
+                    .append("circle")
+                    .attr('class', "dataPoints")
+                    .attr("stroke", "grey")
+                    .attr("cx", function(d, i){
+                        return xScale(i) + ((width/-2) + dx/2);
+                    })
+                    .attr("cy", function(d, i){
+                        return yScale(d[value]) + ((height/-2) + dy/2);
+                    })
+                    .attr("r", 2)
+                    .attr("fill", function(d, i){
+                        return colorScale(d[value]);
+                    });
+
+                // add axis
                 graph.append("g")
                     .call(yaxis)
                     .attr("class", "axis")
@@ -369,21 +376,14 @@
                         .style("text-anchor", "end")
                         .text(labels[1]);
 
-                graph.selectAll("circle")
-                .data(dataPoints)
-                .enter()
-                    .append("circle")
-                    .attr("cx", function(d, i){
-                        console.log(d[value]);
-                        return xScale(i) + ((width/-2) + dx/2);
-                    })
-                    .attr("cy", function(d, i){
-                        return yScale(d[value]) + ((height/-2) + dy/2);
-                    })
-                    .attr("r", 2)
-                    .attr("fill", function(d, i){
-                        return colorScale(d[value]);
-                    });
+                // add title
+                graph.append('text')
+                .attr('font-family', 'sans-serif')
+                .attr('font-size', "3vh" )
+                .attr('x', 0)
+                .attr('y', -(height/2) + dy/4)
+                .style("text-anchor", "middle")
+                .text(title); 
             });
 
         };
@@ -395,11 +395,11 @@
                 data: '=', 
                 labels: '=', 
                 value: '=',
-                title: '='
+                title: '=',
+                colors: '=',
+                percentage: '='
             }
         };
     });
 
 })();
-
-// [{apparentTemperature: 76.11}, {apparentTemperature: 66.11}, {apparentTemperature: 56.11}]" label="'Foo'" value="'apparentTemperature'

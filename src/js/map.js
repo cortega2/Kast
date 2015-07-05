@@ -34,9 +34,6 @@ function LeafletMap(div){
 		// };
 
 		L.control.layers(tiles).addTo(map);
-
-		foo = map;
-
 	};
 
 	this.goTo = function (lat, lng){
