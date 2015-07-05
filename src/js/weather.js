@@ -1,6 +1,4 @@
-function WeatherInfo(key){
-	var key = key;
-
+function WeatherInfo(){
 	this.getCurrent = function (lat, lng, callback){
 		var link = 'requests.php?query=current&lat=' + lat + '&lng=' + lng;
 

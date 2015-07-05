@@ -50,7 +50,22 @@
 }
 
 donut-chart{
-      display: block;
-      float: left;
-      overflow: hidden;
+	display: block;
+	float: left;
+	overflow: hidden;
+}
+
+
+plot-graph{
+	display: block;
+	float: left;
+	overflow: hidden;
+	width: 100%;
+	height: 20vw;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
 }
