@@ -6,6 +6,7 @@ h1{
 h2{
 	margin-top: 10px;
 	margin-bottom: 5px;
+	display: inherit;
 }
 
 h3{
@@ -45,14 +46,19 @@ h3{
 }
 
 /*weather info*/
-#current{
-	padding: 10px;
+/**/
+#current, #weekSummary{
+	padding: 15px;
 	border-bottom: 1px solid black;
 }
 
 #current span {
     display:inline-block;
     float:left;
+}
+
+#hrs span{
+	padding: 10px;
 }
 
 .tab-content{

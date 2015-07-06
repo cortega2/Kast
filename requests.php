@@ -9,6 +9,12 @@
 	        $lng = $_GET['lng'];
 	        $link = $ENDPOINT .$KEY .'/' .$lat .',' .$lng;
 	}
+	else if (strcmp($_GET['query'], 'past') == 0) {
+	        $lat = $_GET['lat'];
+	        $lng = $_GET['lng'];
+	        $date = $_GET['date'];
+	        $link = $ENDPOINT .$KEY .'/' .$lat .',' .$lng .',' .$date;
+	}
 
 
 	$ch = curl_init();

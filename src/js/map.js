@@ -11,16 +11,11 @@ function LeafletMap(div){
 		});
 
 		//radar tiles
-		// var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  //         osmAttribution = 'Map data © OpenStreetMap contributors, CC-BY-SA',
-  //         osmLayer = new L.TileLayer(osmUrl, {attribution: osmAttribution});
-
         // var radar = L.tileLayer('http://{s}.tile.openweathermap.org/map/precipitation/{z}/{x}/{y}.png', {attribution: 'Map data © OpenWeatherMap'});
 
-		// map.addLayer(baseLayer);
 
 		map = L.map(div, {
-		    center: [51.505, -0.09],
+		    center: [41.83, -87.68],
 		    zoom: 10,
 		    layers: [ baseLayer]
 		});

@@ -1,32 +1,71 @@
 <tabset justified="true" id="information">
-	<tab heading="Current" ng-click="testClick('current')">
+	<tab heading="Current">
 		<div id="current">
 			<h1>Now</h1>
 			<span><i ng-class="info.current.icon" ></i></span>
-			<h1> {{info.current.apparentTemperature}} °F</h1>
+			<h1> {{info.current.temperature}} °F</h1>
 			<h3>{{info.current.summary}}</h3>
 			<div class="graphSpace">
 				<donut-chart data="[info.current.cloudCover, 1 - info.current.cloudCover]" ng-style="{ height: 100 + '%', width: 100/2  + '%' }" icon="'cloud'"></donut-chart>
 				<donut-chart data="[info.current.humidity, 1 - info.current.humidity]" ng-style="{ height: 100 + '%', width: 100/2  + '%' }" icon="'drop'"></donut-chart>
 			</div>
 		</div>
-		<div id="48hrs">
-			<h2>The next 48hrs</h2>
-			<plot-graph data="info.hourly.data" labels="['Temperature', 'Hours After Now']" value="'temperature'" title="'Temp In The Next hrs'" colors="['#fc9272', '#de2d26']" ></plot-graph>
+		<div id="hrs">
+			<span><i ng-class="info.hourly.icon" ></i></span>
+			<span><h2>The next 48hrs</h2></span>
+			<h4>{{info.hourly.summary}}</h4>
+			<plot-graph data="info.hourly.data" labels="['Temperature (°F)', 'Hours After Now']" value="'temperature'" title="'Temp In The Next hrs'" colors="['#fc9272', '#de2d26']"></plot-graph>
 			
-<!-- 			<plot-graph data="info.hourly.data" labels="['Humidity (%)', 'Hours After Now']" value="'humidity'" title="'Humidity In The Next hrs'" colors="['#9ecae1', '#3182bd']" percentage="true" tab="'current'"></plot-graph>
+			<plot-graph data="info.hourly.data" labels="['Humidity (%)', 'Hours After Now']" value="'humidity'" title="'Humidity In The Next hrs'" colors="['#9ecae1', '#3182bd']" percentage="true"></plot-graph>
 
-			<plot-graph data="info.hourly.data" labels="['Coverage (%)', 'Hours After Now']" value="'cloudCover'" title="'Cloud Cover In The Next hrs'" colors="['#bdbdbd', '#636363']" percentage="true" tab="'current'"></plot-graph> -->
-
+			<plot-graph data="info.hourly.data" labels="['Coverage (%)', 'Hours After Now']" value="'cloudCover'" title="'Cloud Cover In The Next hrs'" colors="['#bdbdbd', '#636363']" percentage="true"></plot-graph>
 		</div>    	
     </tab>
     <tab heading="Week">
-    	<div>
-    		<!-- <plot-graph data="info.hourly.data" labels="['Temperature', 'Hours After Now']" value="'temperature'" title="'Temp In The Next hrs'" colors="['#fc9272', '#de2d26']" tab="'week'"></plot-graph> -->
+    	<div id="weekSummary">
+    		<h1>Summary</h1>
+    		<span><i ng-class="info.daily.icon"></i></span>
+    		<h2>{{info.daily.summary}}</h2>
+    	</div>	
+    	<div id="weekGraphs">
+    		<plot-graph data="info.daily.data" labels="['Temperature (°F)', 'Days After Today']" value="'temperatureMax'" title="'Max Temperature'" colors="['#fc9272', '#de2d26']" percentage="false"></plot-graph>
+
+    		<plot-graph data="info.daily.data" labels="['Probability (%)', 'Days After Today']" value="'precipProbability'" title="'Chance of Precipitation'" colors="['#9ecae1', '#3182bd']" percentage="true"></plot-graph>
     	</div>
     </tab>
 
-    <tab heading="Past">Long Labeled Justified content</tab>
+    <tab heading="Past">
+    	<div ng-controller="DatepickerCTRL">
+			<p class="input-group">
+				<input type="date" class="form-control" datepicker-popup ng-model="dt" is-open="opened" min-date="0-1-1" max-date="getMaxDate()" ng-required="true" close-text="Close" show-button-bar="false"/>
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+				</span>
+			</p>
+		</div>
+
+		<div id="current">
+			<h1>On This Day</h1>
+			<span><i ng-class="past.day.icon" ></i></span>
+			<h2>High {{past.day.temperatureMax}} °F</h2>
+			<h2>Low {{past.day.temperatureMin}} °F</h2>
+			<h3>{{past.day.summary}}</h3>
+			
+			<div class="graphSpace">
+				<donut-chart data="[past.day.cloudCover, 1 - past.day.cloudCover]" ng-style="{ height: 100 + '%', width: 100/2  + '%' }" icon="'cloud'"></donut-chart>
+				<donut-chart data="[past.day.humidity, 1 - past.day.humidity]" ng-style="{ height: 100 + '%', width: 100/2  + '%' }" icon="'drop'"></donut-chart>
+			</div>
+		</div>
+
+		<div id="hrs">
+				<span><i ng-class="past.hourly.icon" ></i></span>
+				<span><h2>The next {{past.hourly.data.length}} hours since midnight</h2></span>
+				<h4>{{past.hourly.summary}}</h4>
+				<plot-graph data="past.hourly.data" labels="['Temperature (°F)', 'Hours After Midnight']" value="'temperature'" title="'Temp Since Midnight'" colors="['#fc9272', '#de2d26']"></plot-graph>
+				
+				<plot-graph data="past.hourly.data" labels="['Humidity (%)', 'Hours After Midnight']" value="'humidity'" title="'Humidity Since Midnight'" colors="['#9ecae1', '#3182bd']" percentage="true"></plot-graph>
+
+				<plot-graph data="past.hourly.data" labels="['Coverage (%)', 'Hours After Midnight']" value="'cloudCover'" title="'Cloud Cover'" colors="['#bdbdbd', '#636363']" percentage="true"></plot-graph>
+			</div>    
+    </tab>
  </tabset>
-
-

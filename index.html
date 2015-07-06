@@ -17,7 +17,7 @@
 	<body ng-app="skycast">
 		<nav class="navbar navbar-default">
 			<div class="container-fluid" ng-controller="SearchCTRL">
-				<div class="input-group" id="search">
+				<div class="input-group" id="search" >
 					<input type="text" id="inputBox" class="form-control" placeholder="Location" aria-label="search place">
 					 <button type="button" class="btn btn-info" id="searchButton" ng-click="getLocation()">Find Location</button>
 				</div> 
@@ -26,12 +26,12 @@
 
 		<div class="container">
 			<div class="row">
-				<div class="col-md-6 col-lg-6" ng-controller="MapCTRL">
+				<div class="col-md-4 col-lg-4" ng-controller="MapCTRL">
 					<div id ="mapLocation">
 					</div>
 				</div>
 
-				<div class="col-md-6 col-lg-6" ng-controller="WeatherInfoCTRL">
+				<div class="col-md-8 col-lg-8" ng-controller="WeatherInfoCTRL">
 					<weather></weather>
 				</div>
 			</div>
@@ -44,7 +44,10 @@
 
 		<!-- Custom JS -->
 		<script type="text/javascript" src="./src/js/map.js"></script>
-		<script type="text/javascript" src="./src/js/app.js"></script>
 		<script type="text/javascript" src="./src/js/weather.js"></script>
+		<script type="text/javascript" src="./src/js/app.js"></script>
+		<script type="text/javascript" src="./src/js/donut-directive.js"></script>
+		<script type="text/javascript" src="./src/js/graph-directive.js"></script>
+
 	</body>
 </html>

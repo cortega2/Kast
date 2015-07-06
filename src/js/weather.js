@@ -12,7 +12,19 @@ function WeatherInfo(){
 	    		console.log(error);
 	    	}
 	    	else{
-	    		console.log(data);
+	    		callback(data);
+	    	}
+	    });
+	}
+
+	this.getPast = function (lat, lng, date, callback){
+		var link = 'requests.php?query=past&lat=' + lat + '&lng=' + lng +'&date=' + date;
+
+	    d3.json(link, function(error, data){
+	    	if(error){
+	    		console.log(error);
+	    	}
+	    	else{
 	    		callback(data);
 	    	}
 	    });
