@@ -2,35 +2,60 @@ var geocoder = new google.maps.Geocoder();
 var app = angular.module('skycast', ['ui.bootstrap']);
 
 app.controller('SearchCTRL', function($scope, $rootScope){
-    $scope.selected = undefined;
+    // $scope.selected = undefined;
+    $scope.queryHistory = [];
     
-    $scope.getLocation = function(){
-        var input = document.getElementById('inputBox');
-        
-        geocoder.geocode( { 'address': input.value}, function(results, status) {
+    // get location from input
+    $scope.getLocation = function(place){
+        var query = place;
+        var input  = document.getElementById('inputBox');
+        if (place == null){
+            query = input.value;
+        };
+
+        geocoder.geocode( { 'address': query}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 input.value = results[0].formatted_address;
-
                 $scope.broadcastLocation(results[0].geometry.location.A, results[0].geometry.location.F);
+
+                updateCookie(input.value);
+                $scope.queryHistory = getCookies();
+                $scope.$apply();
             } 
             else {
               alert('Unable to find address: ' + status);
             }
-      });
+        });
     };
 
+    // tell others about the location
     $scope.broadcastLocation = function (lat, lng){
-        console.log("Hello");
-
         $rootScope.$broadcast('FoundLocation', {
             lat: lat,
             lng: lng
         });
     }
 
+    $scope.selectPlace = function (place){
+        $scope.getLocation(place);
+    }
+
     //fast way to load up a starting place
     window.onload = function() {
-        $scope.broadcastLocation(41.83, -87.68);
+        $scope.getLocation("Chicago");
+        $scope.queryHistory = getCookies();
+    };
+
+    function getCookies(){
+        var jar = [];
+        var keys = docCookies.keys();
+        for(var i = 0; i<keys.length; i++){
+            docCookies.removeItem(jar[i]);
+            var place = keys[i];
+            var curCount = parseInt(docCookies.getItem(place));
+            jar.push({name: place, count: curCount});
+        };
+        return jar;
     };
 });
 
@@ -51,8 +76,6 @@ app.controller('WeatherInfoCTRL', function ($scope, $rootScope){
 
     $scope.info = {};
     $scope.past = {};
-    // $scope.info.current = {};
-    // $scope.info.current.icon = "fa fa-camera-retro fa-5x";
 
     var weatherInfo = new WeatherInfo();
 
@@ -171,10 +194,6 @@ app.controller('DatepickerCTRL', function ($scope, $rootScope) {
         startingDay: 1
     };
 
-  // $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-  // $scope.format = $scope.formats[0];
-
-
     $scope.getDayClass = function(date, mode) {
     if (mode === 'day') {
       var dayToCheck = new Date(date).setHours(0,0,0,0);
@@ -216,3 +235,20 @@ function formatDate(val){
     return formattedDate;
 }
 
+function updateCookie(place){
+    if(docCookies.getItem(place) == null){
+        docCookies.setItem(place, 1);
+    }
+    else{
+        var val = parseInt(docCookies.getItem(place));
+        docCookies.setItem(place, val + 1);
+    }
+}
+
+// used for testing purposes
+function removeAllCookies(){
+    var jar = docCookies.keys();
+    for(var i = 0; i<jar.length; i++){
+        docCookies.removeItem(jar[i]);
+    }
+}

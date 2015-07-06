@@ -109,7 +109,7 @@ app.directive('plotGraph', function(){
                         return yScale(d[value]) + ((height/-2) + dy/2);
                     }
                 })
-                .attr("r", 2)
+                .attr("r", 4)
                 .attr("fill", function(d, i){
                     return colorScale(d[value]);
                 });
@@ -146,7 +146,6 @@ app.directive('plotGraph', function(){
             .style("text-anchor", "middle")
             .text(title); 
         });
-
     };
 
     return {

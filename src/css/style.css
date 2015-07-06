@@ -14,6 +14,7 @@ h3{
 	margin-top: 0px;
 }
 
+/*Search navbar and buttons*/
 .navbar-default{
 	padding-bottom: 0px;
 	margin-bottom: 0px;
@@ -32,6 +33,15 @@ h3{
 
 #searchButton{
 	float: left;
+}
+
+.historyItem{
+	text-align: center;
+}
+
+.historyItem:hover{
+	background-color: #ecf7ff;
+	cursor: pointer;
 }
 
 /*to get it to work on firefox!*/

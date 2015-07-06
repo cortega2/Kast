@@ -10,8 +10,6 @@
 		<!-- mapping libs -->
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPhck2x4XdeH5VP8uvZacRs7l0FTXLWeM"></script>
-	<!-- 	// <script src="https://openlayers.org/api/OpenLayers.js"></script> -->
-
 	</head>
 
 	<body ng-app="skycast">
@@ -20,6 +18,17 @@
 				<div class="input-group" id="search" >
 					<input type="text" id="inputBox" class="form-control" placeholder="Location" aria-label="search place">
 					 <button type="button" class="btn btn-info" id="searchButton" ng-click="getLocation()">Find Location</button>
+				
+					 <!-- Drop Down -->
+				    <div class="btn-group" dropdown is-open="status.isopen">
+				      <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+				        Search History <span class="caret"></span>
+				      </button>
+				      <ul class="dropdown-menu" role="menu">
+			        		<li class="historyItem" ng-repeat="n in queryHistory | orderBy : '-count'" href="" ng-click="selectPlace(n.name)">{{n.name}}</li>
+				      </ul>
+				    </div>
+
 				</div> 
 			</div>
 		</nav>
@@ -41,6 +50,7 @@
 		<script type="text/javascript" src="./libs/js/angular.min.js"></script>
 		<script type="text/javascript" src="./libs/js/ui-bootstrap.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+		<script type="text/javascript" src="./libs/js/cookies.js"></script>
 
 		<!-- Custom JS -->
 		<script type="text/javascript" src="./src/js/map.js"></script>
