@@ -1,5 +1,5 @@
 <?php
-	$KEY = '6abe4e7b27660bcdd224e6052db73686';
+	$KEY = 'KEY_GOES_HERE';
 	$ENDPOINT = 'https://api.forecast.io/forecast/';
 
 	// https://api.forecast.io/forecast/' + key +'/'+ lat +',' + lng;
